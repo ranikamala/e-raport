@@ -82,13 +82,99 @@
 
           <!-- CHART -->
           <div class="card shadow mb-4">
-            <div class="card-header bg-primary text-white">
-              Grafik Jumlah Santri per Kelas
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <span>Grafik Jumlah Santri per Kelas</span>
+              <div class="btn-group" role="group" aria-label="Tipe Grafik">
+                <button type="button" class="btn btn-light btn-sm" id="barChartBtn" title="Bar Chart"><i class="fas fa-chart-bar"></i></button>
+                <button type="button" class="btn btn-light btn-sm" id="pieChartBtn" title="Pie Chart"><i class="fas fa-chart-pie"></i></button>
+                <button type="button" class="btn btn-light btn-sm" id="lineChartBtn" title="Line Chart"><i class="fas fa-chart-line"></i></button>
+              </div>
             </div>
             <div class="card-body">
               <canvas id="santriChart"></canvas>
             </div>
           </div>
+          @push('scripts')
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            let chartType = 'bar';
+            const ctx = document.getElementById('santriChart').getContext('2d');
+            const chartLabels = {!! json_encode($labels ?? ['Kelas A', 'Kelas B', 'Kelas C']) !!};
+            const chartData = {!! json_encode($data ?? [5, 3, 2]) !!};
+            const chartColors = [
+              '#007bff', '#dc3545', '#ffc107', '#28a745', '#6f42c1', '#17a2b8', '#fd7e14'
+            ];
+
+            let santriChart = new Chart(ctx, {
+              type: chartType,
+              data: {
+                labels: chartLabels,
+                datasets: [{
+                  label: 'Jumlah Santri',
+                  data: chartData,
+                  backgroundColor: chartColors,
+                  borderColor: chartColors,
+                  fill: chartType === 'line' ? false : true,
+                  tension: 0.4
+                }]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    display: chartType !== 'bar'
+                  }
+                },
+                scales: chartType === 'pie' ? {} : {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+
+            function updateChartType(type) {
+              santriChart.destroy();
+              santriChart = new Chart(ctx, {
+                type: type,
+                data: {
+                  labels: chartLabels,
+                  datasets: [{
+                    label: 'Jumlah Santri',
+                    data: chartData,
+                    backgroundColor: chartColors,
+                    borderColor: chartColors,
+                    fill: type === 'line' ? false : true,
+                    tension: 0.4
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      display: type !== 'bar'
+                    }
+                  },
+                  scales: type === 'pie' ? {} : {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            }
+
+            document.getElementById('barChartBtn').addEventListener('click', function() {
+              updateChartType('bar');
+            });
+            document.getElementById('pieChartBtn').addEventListener('click', function() {
+              updateChartType('pie');
+            });
+            document.getElementById('lineChartBtn').addEventListener('click', function() {
+              updateChartType('line');
+            });
+          </script>
+          @endpush
 
         @else
           <div class="alert alert-warning">Anda belum login.</div>

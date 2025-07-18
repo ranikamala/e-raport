@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('agama');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->integer('anak_ke');
             $table->text('alamat');
             $table->timestamps();

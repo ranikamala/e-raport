@@ -53,14 +53,14 @@
     <div class="login-box">
       <div class="card card-outline card-primary">
         <div class="card-header text-center">
-  <a class="link-dark link-offset-2 link-opacity-100 link-opacity-50-hover  align-items-center justify-content-center" href="/dist/pages/index2">
-    <img src="{{ 'img/icon.png' }}" alt="AdminLTE Logo" style="height: 100px; ">
-    <h4 class="fw-bold">E-Raport Nurul Ilmi</h4>
-  </a>
-</div>
+          <a class="link-dark link-offset-2 link-opacity-100 link-opacity-50-hover  align-items-center justify-content-center" href="">
+            <img src="{{ 'img/icon.png' }}" alt="AdminLTE Logo" style="height: 100px; ">
+            <h4 class="fw-bold">E-Raport Nurul Ilmi</h4>
+          </a>
+        </div>
 
         <div class="card-body login-card-body">
-          <p class="login-box-msg">Sign in to start your session</p>
+          <p class="login-box-msg">Masuk untuk memulai sesi</p>
           <form action="/login" method="post">
             @csrf
             <div class="input-group mb-1">
@@ -80,27 +80,21 @@
             <!--begin::Row-->
             <div class="row">
               <div class="col-8 d-inline-flex align-items-center">
-                <div class="form-check">
+                <div class="form-check d-none">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                   <label class="form-check-label" for="flexCheckDefault"> Remember Me </label>
                 </div>
               </div>
               <!-- /.col -->
-              <div class="col-4">
+              <div class="col-4 mt-2">
                 <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-primary">Sign In</button>
+                  <button type="submit" class="btn btn-primary">Masuk</button>
                 </div>
               </div>
               <!-- /.col -->
             </div>
             <!--end::Row-->
           </form>
-          
-          <!-- /.social-auth-links -->
-          <p class="mb-1"><a href="forgot-password.html">I forgot my password</a></p>
-          <p class="mb-0">
-            <a class='text-center' href='/dist/pages/examples/register'> Register a new membership </a>
-          </p>
         </div>
         <!-- /.login-card-body -->
       </div>

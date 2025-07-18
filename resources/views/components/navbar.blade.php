@@ -29,10 +29,10 @@
                   alt="User Image"
                 />
                 @if(auth()->check())
-    <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
-@else
-    <span class="d-none d-md-inline">Tamu</span>
-@endif
+                    <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
+                @else
+                    <span class="d-none d-md-inline">Tamu</span>
+                @endif
 
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
@@ -45,25 +45,15 @@
                   />
                   <p>
                     @if (auth()->check())
-  {{ auth()->user()->name }} - Web Developer
-@else
-  Guest - Web Developer
-@endif
-                    <small>Member since Nov. 2023</small>
+                      {{ auth()->user()->name }}
+                    @else
+                      Guest
+                    @endif
+                    
                   </p>
                 </li>
                 <!--end::User Image-->
                 <!--begin::Menu Body-->
-                <li class="user-body">
-                  <!--begin::Row-->
-                  <div class="row">
-                    <div class="col-4 text-center"><a href="#">Followers</a></div>
-                    <div class="col-4 text-center"><a href="#">Sales</a></div>
-                    <div class="col-4 text-center"><a href="#">Friends</a></div>
-                  </div>
-                  <!--end::Row-->
-                </li>
-                <!--end::Menu Body-->
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>

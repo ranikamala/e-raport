@@ -9,4 +9,6 @@ class OrangTua extends Model
 {
     /** @use HasFactory<\Database\Factories\OrangTuaFactory> */
     use HasFactory;
+    protected $table = 'orang_tua';
+    protected $fillable = ['santri_id', 'nama_ayah', 'nama_ibu', 'pekerjaan', 'nomor_telp'];
 }

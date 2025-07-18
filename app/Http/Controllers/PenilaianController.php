@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penilaian;
+use App\Models\Santri;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PenilaianController extends Controller
@@ -12,7 +14,8 @@ class PenilaianController extends Controller
      */
     public function index()
     {
-    return view("penilaian");
+        $santris = User::where('role', 'siswa')->get();
+        return view("nilai.nilai_santri", compact('santris'));
     }
 
     /**
@@ -26,6 +29,8 @@ class PenilaianController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+     
     public function store(Request $request)
     {
     // Validasi input
@@ -40,7 +45,7 @@ class PenilaianController extends Controller
 
         // Simpan ke database
         Penilaian::create([
-            'user_id'=> 2,
+            'user_id'=> $request->user_id,
             // Materi Pokok
             'membaca_tadarus'    => $request->materi_pokok['membaca'],
             'gerakan_sholat'     => $request->materi_pokok['sholat'],
@@ -64,27 +69,35 @@ class PenilaianController extends Controller
             'kerapihan'          => $request->sikap['kerapihan'],
 
             // Tambahan
-            // 'semester'           => $request->semester,
-            // 'catatan'            => $request->catatan,
+            'semester'           => $request->semester,
+            'tp'                 => $request->tp,
+            'catatan'            => $request->catatan,
         ]);
 
-        return redirect()->back()->with('success', 'Nilai rapor berhasil disimpan.');
+        return redirect('/penilaian')->with('success', 'Nilai rapor berhasil disimpan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $santri = User::find($id);
+        if ($santri) {
+            $dataSantri = Santri::where('user_id', $id)->first();
+        }
+        $nilai = Penilaian::where('user_id', $id)->first();
+        return view("nilai.detail_nilai", compact('santri', 'nilai', 'dataSantri'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $santri = User::find($id);
+        $nilai = Penilaian::where('user_id', $id)->first();
+        return view("nilai.edit_nilai", compact('santri', 'nilai'));
     }
 
     /**

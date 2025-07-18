@@ -26,5 +26,8 @@ class Penilaian extends Model
         'prilaku',
         'kedisiplinan',
         'kerapihan',
+        'semester',
+        'tp',
+        'catatan',
     ];
 }

@@ -20,7 +20,7 @@
       <ul class="nav sidebar-menu flex-column" role="menu">
         <!-- dashboard -->
         <li class="nav-item">
-          <a href="/" class="nav-link">
+          <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
             <i class="nav-icon bi bi-speedometer "></i>
             <p>Dashboard</p>
           </a>
@@ -28,58 +28,49 @@
         
         <!-- Akun Santri -->
         <li class="nav-item">
-          <a href="{{ route('santri') }}" class="nav-link">
+          <x-sidelink href="{{ route('santri') }}" :active="request()->is('santri')">
             <i class="nav-icon bi bi-people-fill"></i>
             <p>
               Akun Santri
             </p>
-          </a>
+          </x-sidelink>
         
         </li>
         
         <!-- Data Santri -->
         <li class="nav-item">
-          <a href="{{ route('data_santri') }}" class="nav-link">
+          <x-sidelink href="{{ route('list_santri') }}" :active="request()->is('list_santri')">
             <i class="nav-icon bi bi-people-fill"></i>
             <p>
               Data Santri
             </p>
-          </a>
-        
+          </x-sidelink>
         </li>
-
+        
         <!-- Data Orang Tua -->
         <li class="nav-item">
-          <a href="{{ route('orangtua') }}" class="nav-link">
+          <x-sidelink href="{{ route('orangtua') }}" :active="request()->is('orangtua')">
             <i class="nav-icon bi bi-people-fill"></i>
             <p>
               Data Orang Tua
             </p>
-          </a>
+          </x-sidelink>
         
         </li>
 
         <!-- Input Santri -->
         <li class="nav-item">
-          <a href="{{ route('inp_santri') }}" class="nav-link">
+          <x-sidelink href="{{ route('inp_santri') }}" :active="request()->is('inp_santri')">
             <i class="nav-icon bi bi-pencil-square"></i>
             <p>Input Santri</p>
-          </a>
+          </x-sidelink>
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('penilaian') }}" class="nav-link">
+          <x-sidelink href="{{ route('penilaian') }}" :active="request()->is('penilaian')">
             <i class="nav-icon bi bi-pencil-square"></i>
             <p>Input Nilai</p>
-          </a>
-        </li>
-
-        <!-- Profil -->
-        <li class="nav-item">
-          <a href="" class="nav-link">
-            <i class="nav-icon bi bi-person-circle"></i>
-            <p>Profil</p>
-          </a>
+          </x-sidelink>
         </li>
 
         <!-- Logout -->
@@ -98,3 +89,4 @@
     </nav>
   </div>
 </aside>
+
