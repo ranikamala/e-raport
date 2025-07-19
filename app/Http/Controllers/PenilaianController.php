@@ -39,6 +39,7 @@ class PenilaianController extends Controller
             'materi_penunjang.*' => 'required|numeric|min:0|max:100',
             'materi_tambahan.*'  => 'required|numeric|min:0|max:100',
             'sikap.*'            => 'required|numeric|min:0|max:100',
+            'absensi.*'          => 'required|numeric|min:0|max:100',
             'semester'           => 'nullable|string|max:50',
             'catatan'            => 'nullable|string',
         ]);
@@ -67,6 +68,11 @@ class PenilaianController extends Controller
             'prilaku'            => $request->sikap['prilaku'],
             'kedisiplinan'       => $request->sikap['kedisiplinan'],
             'kerapihan'          => $request->sikap['kerapihan'],
+
+            // Absensi
+            'sakit'      => $request->absensi['sakit'],
+            'izin'       => $request->absensi['izin'],
+            'alpa'       => $request->absensi['alpa'],
 
             // Tambahan
             'semester'           => $request->semester,
@@ -103,10 +109,78 @@ class PenilaianController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+
+     public function update(Request $request)
+     {
+        $user_id = $request->user_id;
+
+        // Validasi input
+        $request->validate([
+            'materi_pokok.*'     => 'required|numeric|min:0|max:100',
+            'materi_penunjang.*' => 'required|numeric|min:0|max:100',
+            'materi_tambahan.*'  => 'required|numeric|min:0|max:100',
+            'sikap.*'            => 'required|numeric|min:0|max:100',
+            'absensi.*'          => 'required|numeric|min:0|max:100',
+            'semester'           => 'nullable|string|max:50',
+            'catatan'            => 'nullable|string',
+        ]);
+
+        // Cari data penilaian berdasarkan user_id, bukan id primary key
+        $penilaian = Penilaian::where('user_id', $user_id)->first();
+
+        if (!$penilaian) {
+            return redirect('/penilaian')->with('error', 'Data penilaian tidak ditemukan.');
+        }
+
+        // Update data
+        $penilaian->update([
+            'user_id'           => $user_id,
+
+            // Materi Pokok
+            'membaca_tadarus'   => $request->materi_pokok['membaca'],
+            'gerakan_sholat'    => $request->materi_pokok['sholat'],
+            'praktek_wudhu'     => $request->materi_pokok['wudhu'],
+
+            // Materi Penunjang
+            'hafalan_surat'     => $request->materi_penunjang['surat_pendek'],
+            'hafalan_doa'       => $request->materi_penunjang['doa_sehari'],
+            'bacaan_sholat'     => $request->materi_penunjang['bacaan_sholat'],
+            'aqidah_akhlak'     => $request->materi_penunjang['aqidah_akhlak'],
+            'tajwid'            => $request->materi_penunjang['tajwid'],
+            'hadist'            => $request->materi_penunjang['hadist'],
+
+            // Materi Tambahan
+            'tarikh_islam'      => $request->materi_tambahan['tarikh'],
+            'kaligrafi'         => $request->materi_tambahan['kaligrafi'],
+
+            // Sikap / Perilaku
+            'prilaku'           => $request->sikap['prilaku'],
+            'kedisiplinan'      => $request->sikap['kedisiplinan'],
+            'kerapihan'         => $request->sikap['kerapihan'],
+
+            // Absensi
+            'sakit'     => $request->absensi['sakit'],
+            'izin'      => $request->absensi['izin'],
+            'alpa'      => $request->absensi['alpa'],
+
+            // Tambahan
+            'semester'          => $request->semester,
+            'tp'                => $request->tp,
+            'catatan'           => $request->catatan,
+        ]);
+
+        return redirect('/penilaian')->with('success', 'Nilai rapor berhasil diperbarui.');
+     }
+
+     public function cetak($id)
+     {
+        $santri = User::find($id);
+        $nilai = Penilaian::where('user_id', $id)->first();
+        return view("nilai.cetak", compact('santri', 'nilai'));
+     }
+     
+
+    
 
     /**
      * Remove the specified resource from storage.

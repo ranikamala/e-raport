@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,12 @@ class DashboardController extends Controller
             return view('dashboard'); // Tanpa data jika belum login
         }
 
+        $jumlahSantri = User::where('role', 'siswa')->count();
+        $jumlahGuru = User::where('role', 'guru')->count();
+
         return view('dashboard', [
+            'jumlahSantri' => $jumlahSantri,
+            'jumlahGuru' => $jumlahGuru,
         ]);
     }
 

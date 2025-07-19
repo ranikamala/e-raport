@@ -14,31 +14,33 @@
 
         <div class="card">
             <div class="card-body table-responsive">
-                <table id="dataSantriTable" class="table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Nama Lengkap</th>
-                            <th>Tindakan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($santris as $index => $santri)
+                <div class="table-responsive" style="overflow-x: auto;">
+                    <table id="dataSantriTable" class="table table-bordered table-hover" style="white-space: nowrap;">
+                        <thead class="thead-dark">
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $santri->name }}</td>
-                                <td>
-                                    <a href="{{ route('detail_santri', $santri->id) }}" class="btn btn-sm btn-info">Detail</a>
-                                    <a href="{{ route('edit_santri', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                </td>
+                                <th>Nomor</th>
+                                <th>Nama Lengkap</th>
+                                <th>Tindakan</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="text-center">Belum ada data santri.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse ($santris as $index => $santri)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $santri->name }}</td>
+                                    <td>
+                                        <a href="{{ route('detail_santri', $santri->id) }}" class="btn btn-sm btn-info">Detail</a>
+                                        <a href="{{ route('edit_santri', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">Belum ada data santri.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

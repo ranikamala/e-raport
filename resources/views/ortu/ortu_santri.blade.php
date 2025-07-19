@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">    
 
     <div class="container">
-        <h4 class="mb-4 mt-4">Data Santri</h4>
+        <h4 class="mb-4 mt-4">Data Orang Tua Santri</h4>
 
         {{-- Pesan Sukses --}}
         @if (session('success'))
@@ -14,31 +14,33 @@
 
         <div class="card">
             <div class="card-body table-responsive">
-                <table id="dataSantriTable" class="table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Nama Lengkap</th>
-                            <th>Tindakan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($santris as $index => $santri)
+                <div style="overflow-x: auto;">
+                    <table id="dataSantriTable" class="table table-bordered table-hover" style="white-space: nowrap;">
+                        <thead class="thead-dark">
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $santri->name }}</td>
-                                <td>
-                                    <a href="{{ route('detail_ortu', $santri->id) }}" class="btn btn-sm btn-info">Detail</a>
-                                    <a href="{{ route('edit_ortu', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                </td>
+                                <th>Nomor</th>
+                                <th>Nama Lengkap</th>
+                                <th>Tindakan</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="text-center">Belum ada data santri.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse ($santris as $index => $santri)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $santri->name }}</td>
+                                    <td>
+                                        <a href="{{ route('detail_ortu', $santri->id) }}" class="btn btn-sm btn-info">Detail</a>
+                                        <a href="{{ route('edit_ortu', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">Belum ada data santri.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

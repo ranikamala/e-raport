@@ -1,17 +1,20 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
   <!-- Sidebar Brand -->
   <div class="sidebar-brand">
-    <a href="{{ route('dashboard') }}" class="brand-link">
-      <img 
-    src="{{ asset('img/logo.png') }}" 
-    alt="logo e-raport"
-    class="brand-image opacity-200 shadow"
-    style="width: 120px; height: 120px; object-fit: contain;" 
-/>
-
-
-      <span class="brand-text fw-light"></span>
+    <!--begin::Brand Link-->
+    <a href="./index.html" class="brand-link">
+      <!--begin::Brand Image-->
+      <img
+        src="{{ asset('img/icon.png') }}"
+        alt="AdminLTE Logo"
+        class="brand-image opacity-75 shadow"
+      />
+      <!--end::Brand Image-->
+      <!--begin::Brand Text-->
+      <span class="brand-text fw-light">E-Raport</span>
+      <!--end::Brand Text-->
     </a>
+    <!--end::Brand Link-->
   </div>
 
   <!-- Sidebar Menu -->
@@ -62,7 +65,7 @@
         <li class="nav-item">
           <x-sidelink href="{{ route('inp_santri') }}" :active="request()->is('inp_santri')">
             <i class="nav-icon bi bi-pencil-square"></i>
-            <p>Input Santri</p>
+            <p>Tambah Santri</p>
           </x-sidelink>
         </li>
 

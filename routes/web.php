@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrangTuaController;
 use App\Http\Controllers\PenilaianController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SantriController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,10 @@ Route::get('/',[DashboardController::class,'index'])->name('dashboard')->middlew
 Route::get('/login',[LoginController::class,'index'])->middleware('guest');
 Route::post('/login',[LoginController::class,'login'])->name('login');
 Route::get('/logout',[LoginController::class,'logout']);
+Route::get('/profile',[ProfileController::class,'index'])->name('profile')->middleware('auth');
+Route::get('/edit_profile',[ProfileController::class,'edit'])->name('edit_profile')->middleware('auth');
+Route::post('/update_profile',[ProfileController::class,'update'])->name('update_profile')->middleware('auth');
 
- // Dashboard
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/penilaian',[PenilaianController::class,'index'])->name("penilaian")->middleware('auth');
 Route::get('/santri',[SantriController::class,'index'])->name("santri")->middleware('auth');
@@ -33,5 +35,7 @@ Route::get('/detail_ortu-{id}',[OrangTuaController::class,'show'])->name("detail
 Route::get('/edit_ortu-{id}',[OrangTuaController::class,'edit'])->name("edit_ortu")->middleware('auth');
 Route::post('/update_ortu',[OrangTuaController::class,'update'])->name("update_ortu")->middleware('auth');
 Route::post('/penilaian_store',[PenilaianController::class,'store'])->name("penilaian.store")->middleware('auth');
+Route::post('/penilaian_update',[PenilaianController::class,'update'])->name("penilaian.update")->middleware('auth');
 Route::get('/detail_nilai-{id}',[PenilaianController::class,'show'])->name("detail_nilai")->middleware('auth');
 Route::get('/edit_nilai-{id}',[PenilaianController::class,'edit'])->name("edit_nilai")->middleware('auth');
+Route::get('/cetak-{id}',[PenilaianController::class,'cetak'])->name("cetak")->middleware('auth');

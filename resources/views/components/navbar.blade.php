@@ -24,7 +24,7 @@
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img
-                  src="{{ 'template' }}/dist/assets/img/user2-160x160.jpg"
+                  src="{{ asset('img/user.png') }}"
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
@@ -39,7 +39,7 @@
                 <!--begin::User Image-->
                 <li class="user-header text-bg-primary">
                   <img
-                    src="{{ 'template' }}/dist/assets/img/user2-160x160.jpg"
+                    src="{{ asset('img/user.png') }}"
                     class="rounded-circle shadow"
                     alt="User Image"
                   />
@@ -56,7 +56,7 @@
                 <!--begin::Menu Body-->
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="/profile" class="btn btn-default btn-flat">Profile</a>
                   <a href="/logout" class="btn btn-default btn-flat float-end">Sign out</a>
                 </li>
                 <!--end::Menu Footer-->

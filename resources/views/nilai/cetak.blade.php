@@ -1,21 +1,94 @@
-<x-layout> 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAPORAN HASIL BELAJAR SANTRI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        @media (max-width: 767.98px) {
-            .desktop-only-content {
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                font-size: 10pt;
+                overflow: hidden;
+            }
+
+            .container-fluid {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .table {
+                font-size: 9pt;
+            }
+
+            .table th, .table td {
+                padding: 4px !important;
+            }
+
+            .card-body {
+                padding: 0 !important;
+            }
+
+            .row {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .signature-line {
+                width: 150px;
+            }
+
+            .no-print, .btn {
                 display: none !important;
             }
-            .mobile-info-alert {
-                display: block !important;
+
+            table, tr, td, th {
+                page-break-inside: avoid !important;
             }
         }
-        @media (min-width: 768px) {
-            .mobile-info-alert {
-                display: none !important;
-            }
+
+        
+        
+        
+        .table th {
+            background-color: #f8f9fa !important;
+            border: 1px solid #dee2e6 !important;
+        }
+        
+        .table td {
+            border: 1px solid #dee2e6 !important;
+        }
+        
+        .table-secondary {
+            background-color: #e9ecef !important;
+        }
+        
+        .signature-line {
+            border-top: 1px solid #000;
+            width: 200px;
+            margin: 0 auto;
+        }
+        
+        .print-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .print-header h3 {
+            font-weight: bold;
+            margin: 0;
         }
     </style>
-
-    <div class="container">
+</head>
+<body>
+    <div class="container-fluid">
         <!-- Mobile Info Alert -->
         <div class="mobile-info-alert" style="display:none;">
             <div class="alert alert-info mt-5 text-center" style="font-size: 1.1rem;">
@@ -31,8 +104,8 @@
         <div class="card mt-4 desktop-only-content">
             <div class="card-body">
                 <!-- Header -->
-                <div class="text-center mb-4">
-                    <h3 class="font-weight-bold">LAPORAN HASIL BELAJAR SANTRI</h3>
+                <div class="print-header">
+                    <h3>LAPORAN HASIL BELAJAR SANTRI</h3>
                 </div>
 
                 @if(isset($santri) && isset($nilai))
@@ -50,7 +123,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Tahun Ajaran</strong></td>
-                                    <td>: {{ $nilai->tahun_ajaran ?? '2024/2025' }}</td>
+                                    <td>: {{ $nilai->tp ?? '2024/2025' }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -72,7 +145,6 @@
                                     <th style="width: 100px; text-align: center;">BAIK</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <!-- A. MATERI POKOK -->
                                 <tr class="table-secondary">
@@ -181,11 +253,11 @@
                     </div>
 
                     <!-- Personality Assessment and Attendance -->
-                    <div class="row mb-4">
+                    <div class="row mb-4 d-flex align-items-stretch" style="display: flex; flex-wrap: wrap;">
                         <!-- Personality Assessment -->
-                        <div class="col-md-6">
-                            <table class="table table-bordered">
-                                <thead class="">
+                        <div class="col-md-6" style="display: flex; flex-direction: column; height: 100%;">
+                            <table class="table table-bordered h-100 mb-0">
+                                <thead>
                                     <tr>
                                         <th class="text-center">KEPRIBADIAN</th>
                                         <th class="text-center" style="width: 100px;">NILAI</th>
@@ -209,9 +281,9 @@
                         </div>
 
                         <!-- Attendance -->
-                        <div class="col-md-6">
-                            <table class="table table-bordered">
-                                <thead class="">
+                        <div class="col-md-6" style="display: flex; flex-direction: column; height: 100%;">
+                            <table class="table table-bordered h-100 mb-0">
+                                <thead>
                                     <tr>
                                         <th colspan="2" class="text-center">ABSENSI</th>
                                     </tr>
@@ -237,6 +309,25 @@
                             </table>
                         </div>
                     </div>
+                    <style>
+                        @media print {
+                            .row.mb-4.d-flex.align-items-stretch {
+                                display: flex !important;
+                                flex-wrap: wrap !important;
+                            }
+                            .row.mb-4.d-flex.align-items-stretch > .col-md-6 {
+                                display: flex !important;
+                                flex-direction: column !important;
+                                height: 100% !important;
+                                max-width: 50% !important;
+                                flex: 0 0 50% !important;
+                            }
+                            .row.mb-4.d-flex.align-items-stretch table {
+                                height: 100% !important;
+                                margin-bottom: 0 !important;
+                            }
+                        }
+                    </style>
 
                     <!-- Notes -->
                     <div class="mb-4">
@@ -247,39 +338,66 @@
                     </div>
 
                     <!-- Signatures -->
-                    <div class="row mt-5">
+                     
+                    <div class="row mt-5 align-items-end justify-content-center" style="min-height: 180px;">
                         <div class="col-md-12 text-center mb-4">
                             <p><strong>Mengetahui,</strong></p>
                         </div>
-                        <div class="col-md-6 text-center mb-4">
+                        <div class="col-md-6 text-center mb-4 d-flex flex-column justify-content-end" style="min-height: 150px;">
                             <p><strong>Orang Tua/Wali</strong></p>
+                            <div style="flex:1"></div>
                             <div style="height: 70px;"></div>
-                            <div class="border-top border-dark" style="width: 200px; margin: 0 auto;"></div>
+                            <div class="signature-line"></div>
                         </div>
-                        <div class="col-md-6 text-center mb-4">
+                        <div class="col-md-6 text-center mb-4 d-flex flex-column justify-content-end" style="min-height: 150px;">
                             <p><strong>Wali Kelas</strong></p>
+                            <div style="flex:1"></div>
                             <div style="height: 70px;"></div>
-                            <div class="border-top border-dark" style="width: 200px; margin: 0 auto;"></div>
+                            <div class="signature-line"></div>
                         </div>
                     </div>
+                    <style>
+                        @media print {
+                            .row.mt-5.align-items-end.justify-content-center {
+                                display: flex !important;
+                                flex-wrap: wrap !important;
+                                align-items: flex-end !important;
+                                justify-content: center !important;
+                                min-height: 180px !important;
+                            }
+                            .row.mt-5.align-items-end.justify-content-center > .col-md-6 {
+                                display: flex !important;
+                                flex-direction: column !important;
+                                justify-content: flex-end !important;
+                                min-height: 150px !important;
+                                height: 100% !important;
+                                max-width: 50% !important;
+                                flex: 0 0 50% !important;
+                            }
+                        }
+                    </style>
 
-                    <div class="text-center mt-4">
+                    <div class="text-center mt-4 no-print">
                         <a href="/penilaian" class="btn btn-secondary">Kembali</a>
-                        <button onclick="cetak(this)" data-id="{{ $santri->id }}" class="btn btn-primary">Cetak</button>
+                        <button onclick="window.print()" class="btn btn-primary">Cetak</button>
                     </div>
                 @else
                     <div class="alert alert-warning mt-4">
                         Data nilai santri belum terisi.
                     </div>
-                    <a href="/penilaian" class="btn btn-secondary mt-3">Kembali</a>
+                    <div class="text-center mt-3 no-print">
+                        <a href="/penilaian" class="btn btn-secondary">Kembali</a>
+                    </div>
                 @endif
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function cetak(button) {
-            const id = button.getAttribute('data-id');
-            window.location.href = `/cetak-${id}`;
-        }
+        window.onload = function() {
+            window.print();
+        };
     </script>
-</x-layout>
+</body>
+</html>

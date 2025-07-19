@@ -38,7 +38,13 @@ return new class extends Migration
             $table->unsignedTinyInteger('kedisiplinan')->nullable();
             $table->unsignedTinyInteger('kerapihan')->nullable();
 
+            // Absensi
+            $table->unsignedTinyInteger('sakit')->nullable();
+            $table->unsignedTinyInteger('izin')->nullable();
+            $table->unsignedTinyInteger('alpa')->nullable();
+
             // Informasi tambahan
+            $table->string('kelas')->nullable();
             $table->string('semester')->nullable(); // misalnya: "Ganjil 2025"
             $table->string('tp')->nullable(); // misalnya: "Ganjil 2025"
             $table->text('catatan')->nullable();    // opsional: untuk komentar atau evaluasi
