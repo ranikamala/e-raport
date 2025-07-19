@@ -6,6 +6,7 @@ use App\Models\Penilaian;
 use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PenilaianController extends Controller
 {
@@ -21,9 +22,13 @@ class PenilaianController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function nilai()
     {
-        //
+        $id = Auth::user()->id;
+        $santri = User::find($id);
+        $nilai = Penilaian::where('user_id', $id)->first();
+        $dataSantri = Santri::where('user_id', $id)->first();
+        return view("nilai.detail_nilai", compact('santri', 'nilai', 'dataSantri'));
     }
 
     /**

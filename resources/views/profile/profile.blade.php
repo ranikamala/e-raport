@@ -1,6 +1,22 @@
 <x-layout>
     <div class="container py-5">
         <div class="row justify-content-center">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <script>
+                setTimeout(function() {
+                    var alert = document.getElementById('successAlert');
+                    if (alert) {
+                        // Bootstrap 5 dismiss
+                        var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                        bsAlert.close();
+                    }
+                }, 3000);
+            </script>
+        @endif
             <div class="col-md-8">
                 <div class="card shadow-lg border-0 rounded-4">
                     <div class="card-body p-5">
@@ -43,7 +59,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>  
     <script>
         function editProfile() {
             window.location.href = '/edit_profile';

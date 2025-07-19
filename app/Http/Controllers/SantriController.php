@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SantriController extends Controller
@@ -14,7 +15,7 @@ class SantriController extends Controller
      */
     public function index()
     {
-        $santris = User::where('role', 'siswa')->get();
+        $santris = User::where('role', 'siswa')->orderByDesc('created_at')->get();
         return view('santri', compact('santris'));
     }
 
@@ -52,16 +53,13 @@ class SantriController extends Controller
         $user->save();
 
         // Redirect dengan pesan sukses
-        return redirect()->back()->with('success', 'Data santri berhasil disimpan!');
+        return redirect()->route('santri')->with('success', 'Data santri berhasil disimpan!');
     }
 
     /**
      * Store a newly created resource in storage.
      */
 
-     public function stores(Request $request){
-        dd($request->all());
-     }
     public function store(Request $request)
     {
     $request->validate([
@@ -147,7 +145,13 @@ class SantriController extends Controller
             'alamat'          => $request->alamat,
         ]);
 
-        return redirect('/list_santri')->with('success', 'Data santri berhasil diupdate.');
+        if (auth()->user()->role == 'guru') {
+
+            return redirect('/list_santri')->with('success', 'Data santri berhasil diupdate.');
+        }else{
+            return redirect('/detail_saya')->with('success', 'Data santri berhasil diupdate.');
+        }
+
     }
 
     /**
@@ -184,13 +188,55 @@ class SantriController extends Controller
         return view('edit_santri', compact('namaSantri', 'dataSantri'));
     }
 
-    
+    public function edit_santri($id)
+    {
+        $dataSantri = User::find($id);
+        return view('edit_akun_santri', compact( 'dataSantri'));
+    }
+
+    public function update_santri(Request $request, $id)
+    {
+        $dataSantri = User::find($id);
+
+        $data = $request->only(['name', 'email']);
+
+        // Jika password diisi, update password, jika tidak, jangan ubah password
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+            $data['password'] = bcrypt($request->password);
+        }
+
+        $dataSantri->update($data);
+
+        return redirect()->route('santri')->with('success', 'Data santri berhasil diubah!');
+    }
+    public function detailSaya(){
+        $id = Auth::user()->id;
+        $data = Santri::where('user_id', $id)->first();
+        if ($data !== null) {
+            $santri = $data;
+        }else{
+            $santri = User::find($id);
+        }
+        return view('detail_santri', compact('santri'));
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete_santri($id)
     {
-        //
+        $dataSantri = User::find($id);
+        $dataSantri->delete();
+        return redirect()->route('santri')->with('success', 'Data santri berhasil dihapus!');
+    }
+
+    public function edit_data(){
+        $id = Auth::user()->id;
+        $namaSantri = User::find($id);
+        $dataSantri = Santri::where('user_id', $id)->first();
+        return view('edit_santri', compact('namaSantri', 'dataSantri'));
     }
 }

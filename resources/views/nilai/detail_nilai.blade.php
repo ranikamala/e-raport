@@ -1,19 +1,5 @@
 <x-layout> 
-    <style>
-        @media (max-width: 767.98px) {
-            .desktop-only-content {
-                display: none !important;
-            }
-            .mobile-info-alert {
-                display: block !important;
-            }
-        }
-        @media (min-width: 768px) {
-            .mobile-info-alert {
-                display: none !important;
-            }
-        }
-    </style>
+    
 
     <div class="container">
         <!-- Mobile Info Alert -->
@@ -28,8 +14,29 @@
         </div>
 
         <!-- Desktop Only Content -->
-        <div class="card mt-4 desktop-only-content">
-            <div class="card-body">
+        <style>
+            /* Hilangkan wrap dan buat scroll horizontal pada mobile */
+            @media (max-width: 767.98px) {
+                .no-wrap-mobile {
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .no-wrap-mobile table {
+                    min-width: 700px;
+                    width: max-content;
+                }
+                .no-wrap-mobile .row,
+                .no-wrap-mobile .col-md-6,
+                .no-wrap-mobile .col-md-12 {
+                    display: block !important;
+                    width: 100% !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+            }
+        </style>
+        <div class="card mt-4">
+            <div class="card-body no-wrap-mobile">
                 <!-- Header -->
                 <div class="text-center mb-4">
                     <h3 class="font-weight-bold">LAPORAN HASIL BELAJAR SANTRI</h3>
@@ -264,7 +271,7 @@
                     </div>
 
                     <div class="text-center mt-4">
-                        <a href="/penilaian" class="btn btn-secondary">Kembali</a>
+                        <a href="/penilaian" class="btn btn-secondary {{ auth()->user()->role == 'siswa' ? 'd-none' : '' }}">Kembali</a>
                         <button onclick="cetak(this)" data-id="{{ $santri->id }}" class="btn btn-primary">Cetak</button>
                     </div>
                 @else

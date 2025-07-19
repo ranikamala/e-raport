@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrangTua;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrangTuaController extends Controller
 {
@@ -43,6 +44,12 @@ class OrangTuaController extends Controller
         return view('ortu.detail_ortu', compact('santri', 'ortu'));
     }
 
+    public function detailOrtu(){
+        $id = Auth::user()->id;
+        $santri = User::find($id);
+        $ortu = OrangTua::where('santri_id', $id)->first();
+        return view('ortu.detail_ortu', compact('santri', 'ortu'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -53,13 +60,17 @@ class OrangTuaController extends Controller
         return view('ortu.edit_ortu', compact('santri', 'ortu'));
     }
 
+    public function editOrtu(){
+        $id = Auth::user()->id;
+        $santri = User::find($id);
+        $ortu = OrangTua::where('santri_id', $id)->first();
+        return view('ortu.edit_ortu', compact('santri', 'ortu'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
 
-     public function updates(Request $request){
-        dd($request->all());
-     }
     public function update(Request $request)
     {
         $id = $request->santri_id;
@@ -122,7 +133,11 @@ class OrangTuaController extends Controller
                 'nomor_telp' => $request->nomor_telp,
             ]);
         }
-        return redirect('/orangtua')->with('success', 'Data orang tua berhasil diupdate.');
+        if (auth()->user()->role == 'guru') {
+            return redirect('/orangtua')->with('success', 'Data orang tua berhasil diupdate.');
+        }else{
+            return redirect('/detailOrtu')->with('success', 'Data orang tua berhasil diupdate.');
+        }
     }
 
     /**

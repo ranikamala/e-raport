@@ -40,6 +40,11 @@
                     </div>
                 @endif
                 <a href="{{ route('orangtua') }}" class="btn btn-secondary mt-3">Kembali</a>
+                @if(auth()->user()->role == 'guru')
+                    <a href="/edit_ortu-{{ $ortu->id }}" class="btn btn-info mt-3">Edit</a>
+                @else
+                    <a href="/editOrtu" class="btn btn-info mt-3">Edit</a>
+                @endif
             </div>
         </div>
     </div>

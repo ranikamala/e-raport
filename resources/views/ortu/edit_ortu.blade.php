@@ -51,11 +51,15 @@
                     <div class="mb-3 row">
                         <label for="nomor_telp" class="col-sm-3 col-form-label fw-bold">No. Telepon</label>
                         <div class="col-sm-9">
-                            <input type="text" name="nomor_telp" id="nomor_telp" class="form-control" value="{{ old('nomor_telp', $ortu->nomor_telp ?? '') }}">
+                            <input type="text" name="nomor_telp" id="nomor_telp" class="form-control" value="{{ old('nomor_telp', $ortu->nomor_telp ?? '') }}" maxlength="13">
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('orangtua') }}" class="btn btn-secondary me-2">Batal</a>
+                        @if(auth()->user()->role == 'guru')
+                            <a href="/orangtua" class="btn btn-secondary me-2">Batal</a>
+                        @else
+                            <a href="/detailOrtu" class="btn btn-secondary me-2">Batal</a>
+                        @endif
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>

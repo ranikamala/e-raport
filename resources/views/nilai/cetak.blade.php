@@ -378,7 +378,7 @@
                     </style>
 
                     <div class="text-center mt-4 no-print">
-                        <a href="/penilaian" class="btn btn-secondary">Kembali</a>
+                        <!-- <a href="/penilaian" class="btn btn-secondary">Kembali</a> -->
                         <button onclick="window.print()" class="btn btn-primary">Cetak</button>
                     </div>
                 @else

@@ -4,7 +4,19 @@
 
         {{-- Pesan Sukses --}}
         @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <script>
+                setTimeout(function() {
+                    var alert = document.getElementById('successAlert');
+                    if (alert) {
+                        var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                        bsAlert.close();
+                    }
+                }, 3000);
+            </script>
         @endif
 
         {{-- Tabel Data Santri --}}
@@ -28,13 +40,9 @@
                                 <td>{{ $santri->email }}</td>
                                 <td>{{ $santri->created_at->format('d M Y') }}</td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ route('edit_akun_santri', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
-                                    <form action="" method="POST" style="display:inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
-                                    </form>
+                                    <button class="btn btn-sm btn-danger" data-id="{{ $santri->id }}" onclick="hapus(this)">Hapus</button>
                                 </td>
                             </tr>
                         @empty
@@ -47,4 +55,24 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function hapus(button) {
+            const id = button.getAttribute('data-id');
+            Swal.fire({
+                title: 'Yakin ingin menghapus santri ini?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/delete_santri-' + id;
+                }
+            });
+        }
+    </script>
 </x-layout>

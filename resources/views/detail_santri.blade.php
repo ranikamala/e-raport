@@ -45,7 +45,12 @@
                             <td>: {{ $santri->alamat ?? '-' }}</td>
                         </tr>
                     </table>
-                    <a href="/list_santri" class="btn btn-secondary mt-3">Kembali</a>
+                    @if(auth()->user()->role == 'guru')
+                        <a href="/list_santri" class="btn btn-secondary mt-3">Kembali</a>
+                        <a href="/edit_santri-{{ $santri->id }}" class="btn btn-info mt-3">Edit</a>
+                    @else
+                        <a href="/edit_data" class="btn btn-info mt-3">Edit</a>
+                    @endif
                 </div>
             </div>
         @else

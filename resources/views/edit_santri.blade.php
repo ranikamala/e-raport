@@ -56,7 +56,7 @@
           <div class="mt-3">
             <button type="submit" class="btn btn-success">Simpan</button>
             <div class="float-end">
-              <a href="/list_santri" class="btn btn-secondary">Kembali</a>
+              <a href="/{{ auth()->user()->role == 'guru' ? 'list_santri' : 'detail_saya' }}" class="btn btn-secondary">Kembali</a>
             </div>
           </div>
         </form>
@@ -110,7 +110,7 @@
           <div class="mt-3">
             <button type="submit" class="btn btn-success">Simpan</button>
             <div class="float-end">
-              <a href="/list_santri" class="btn btn-secondary">Kembali</a>
+              <a href="/{{ auth()->user()->role == 'guru' ? 'list_santri' : 'detail_saya' }}" class="btn btn-secondary">Kembali</a>
             </div>
           </div>
         </form>
