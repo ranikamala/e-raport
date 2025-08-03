@@ -51,6 +51,109 @@
               </div>
             </div>
           </div>
+
+          <!-- Tambahan 3 Card Kelas -->
+          <div class="row">
+            <!-- Cards Kiri -->
+            <div class="col-md-6 d-flex flex-column justify-content-between">
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <div class="card shadow h-100 border-0">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                      <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px;">
+                        <i class="fas fa-users fa-lg text-primary"></i>
+                      </div>
+                      <h5 class="card-title mb-1 text-primary fw-bold">Kelas Al-Ikhlas</h5>
+                      <h2 class="fw-bold mb-1 text-primary">25</h2>
+                      <span class="text-muted small">Jumlah Anak</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                  <div class="card shadow h-100 border-0">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                      <div class="rounded-circle bg-warning bg-opacity-10 d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px;">
+                        <i class="fas fa-users fa-lg text-warning"></i>
+                      </div>
+                      <h5 class="card-title mb-1 text-warning fw-bold">Kelas Al-Alim</h5>
+                      <h2 class="fw-bold mb-1 text-warning">18</h2>
+                      <span class="text-muted small">Jumlah Anak</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="card shadow h-100 border-0">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                      <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px;">
+                        <i class="fas fa-users fa-lg text-success"></i>
+                      </div>
+                      <h5 class="card-title mb-1 text-success fw-bold">Kelas Al-Malik</h5>
+                      <h2 class="fw-bold mb-1 text-success">22</h2>
+                      <span class="text-muted small">Jumlah Anak</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Grafik Kanan -->
+            <div class="col-md-6 d-flex align-items-stretch">
+              <div class="card w-100 mb-4">
+                <div class="card-header bg-light">
+                  <strong>Grafik Jumlah Anak per Kelas</strong>
+                </div>
+                <div class="card-body d-flex align-items-center justify-content-center">
+                  <canvas id="kelasChart" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              var ctx = document.getElementById('kelasChart').getContext('2d');
+              new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['Al-Ikhlas', 'Al-Alim', 'Al-Malik'],
+                  datasets: [{
+                    label: 'Jumlah Anak',
+                    data: [25, 18, 22],
+                    backgroundColor: [
+                      'rgba(13, 110, 253, 0.7)',
+                      'rgba(255, 193, 7, 0.7)',
+                      'rgba(25, 135, 84, 0.7)'
+                    ],
+                    borderColor: [
+                      'rgba(13, 110, 253, 1)',
+                      'rgba(255, 193, 7, 1)',
+                      'rgba(25, 135, 84, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      title: {
+                        display: true,
+                        text: 'Jumlah Anak'
+                      }
+                    },
+                    x: {
+                      title: {
+                        display: true,
+                        text: 'Nama Kelas'
+                      }
+                    }
+                  }
+                }
+              });
+            });
+          </script>
+          
         @else
           <div class="welcome-section text-center py-5">
             <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-4 animate__animated animate__fadeInDown">
