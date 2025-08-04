@@ -19,8 +19,7 @@ class DatabaseSeeder extends Seeder
         // Data guru
         $teachers = [
             ['name' => 'Guru Satu', 'email' => 'guru1@example.com'],
-            ['name' => 'Guru Dua', 'email' => 'guru2@example.com'],
-            ['name' => 'Guru Tiga', 'email' => 'guru3@example.com'],
+            
         ];
 
         foreach ($teachers as $teacher) {

@@ -20,6 +20,7 @@ protected $fillable = [
         'agama',
         'anak_ke',
         'alamat',
+        'kelas',
     ];
 
 }

@@ -1,5 +1,6 @@
 <x-layout>
     <div class="container">
+        
         <h4 class="mb-4 mt-4">Detail Santri</h4>
 
         @if(isset($santri))
@@ -41,13 +42,25 @@
                             <td>: {{ $santri->anak_ke ?? '-' }}</td>
                         </tr>
                         <tr>
+                            <th>Kelas</th>
+                            @if($santri->kelas == 'ikhlas')
+                                <td>: Al-Ikhlas</td>
+                            @elseif($santri->kelas == 'malik')
+                                <td>: Al-Malik</td>
+                            @elseif($santri->kelas == 'alim')
+                                <td>: Al-Alim</td>
+                            @else
+                                <td>: -</td>
+                            @endif
+                        </tr>
+                        <tr>
                             <th>Alamat</th>
                             <td>: {{ $santri->alamat ?? '-' }}</td>
                         </tr>
                     </table>
                     @if(auth()->user()->role == 'guru')
                         <a href="/list_santri" class="btn btn-secondary mt-3">Kembali</a>
-                        <a href="/edit_santri-{{ $santri->id }}" class="btn btn-info mt-3">Edit</a>
+                        <a href="/edit_santri-{{ $santri->user_id ?? $santri->id }}" class="btn btn-info mt-3">Edit</a>
                     @else
                         <a href="/edit_data" class="btn btn-info mt-3">Edit</a>
                     @endif

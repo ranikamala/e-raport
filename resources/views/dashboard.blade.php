@@ -23,7 +23,7 @@
 
           <!-- STAT CARDS -->
           <div class="row">
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-4" style="cursor: pointer;" onclick="window.location.href = '{{ url('santri') }}'">
               <div class="card bg-info text-white shadow">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
@@ -57,38 +57,38 @@
             <!-- Cards Kiri -->
             <div class="col-md-6 d-flex flex-column justify-content-between">
               <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mb-3" style="cursor: pointer;" onclick="window.location.href = '{{ url('list_santri_ikhlas') }}'">
                   <div class="card shadow h-100 border-0">
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
                       <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px;">
                         <i class="fas fa-users fa-lg text-primary"></i>
                       </div>
                       <h5 class="card-title mb-1 text-primary fw-bold">Kelas Al-Ikhlas</h5>
-                      <h2 class="fw-bold mb-1 text-primary">25</h2>
+                      <h2 class="fw-bold mb-1 text-primary">{{ $jumlahSantriIkhlas ?? 0 }}</h2>
                       <span class="text-muted small">Jumlah Anak</span>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mb-3" style="cursor: pointer;" onclick="window.location.href = '{{ url('list_santri_alim') }}'">
                   <div class="card shadow h-100 border-0">
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
                       <div class="rounded-circle bg-warning bg-opacity-10 d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px;">
                         <i class="fas fa-users fa-lg text-warning"></i>
                       </div>
                       <h5 class="card-title mb-1 text-warning fw-bold">Kelas Al-Alim</h5>
-                      <h2 class="fw-bold mb-1 text-warning">18</h2>
+                      <h2 class="fw-bold mb-1 text-warning">{{ $jumlahSantriAlim ?? 0 }}</h2>
                       <span class="text-muted small">Jumlah Anak</span>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" style="cursor: pointer;" onclick="window.location.href = '{{ url('list_santri_malik') }}'">
                   <div class="card shadow h-100 border-0">
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
                       <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center mb-3" style="width:60px; height:60px;">
                         <i class="fas fa-users fa-lg text-success"></i>
                       </div>
                       <h5 class="card-title mb-1 text-success fw-bold">Kelas Al-Malik</h5>
-                      <h2 class="fw-bold mb-1 text-success">22</h2>
+                      <h2 class="fw-bold mb-1 text-success">{{ $jumlahSantriMalik ?? 0 }}</h2>
                       <span class="text-muted small">Jumlah Anak</span>
                     </div>
                   </div>
@@ -119,7 +119,7 @@
                   labels: ['Al-Ikhlas', 'Al-Alim', 'Al-Malik'],
                   datasets: [{
                     label: 'Jumlah Anak',
-                    data: [25, 18, 22],
+                    data: [{{ $jumlahSantriIkhlas ?? 0 }}, {{ $jumlahSantriAlim ?? 0 }}, {{ $jumlahSantriMalik ?? 0 }}],
                     backgroundColor: [
                       'rgba(13, 110, 253, 0.7)',
                       'rgba(255, 193, 7, 0.7)',
@@ -140,6 +140,14 @@
                       title: {
                         display: true,
                         text: 'Jumlah Anak'
+                      },
+                      ticks: {
+                        stepSize: 1,
+                        callback: function(value) {
+                          if (Number.isInteger(value)) {
+                            return value;
+                          }
+                        }
                       }
                     },
                     x: {

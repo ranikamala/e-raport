@@ -1,5 +1,6 @@
 <x-layout>
   <div class="col-md-10 m-auto">
+    
     <div class="card shadow mb-4 mt-4">
       <div class="card-header bg-primary text-white">
         <h5 class="mb-0">Form Input Data Santri</h5>
@@ -46,7 +47,7 @@
 
           {{-- Submit --}}
           <div class="mt-3">
-              <button type="submit" class="btn btn-success">Simpan Data Santri</button>
+              <button type="submit" class="btn btn-success">Simpan</button>
           </div>
       </form>
 

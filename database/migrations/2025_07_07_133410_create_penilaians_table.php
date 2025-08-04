@@ -45,10 +45,11 @@ return new class extends Migration
 
             // Informasi tambahan
             $table->string('kelas')->nullable();
-            $table->string('semester')->nullable(); // misalnya: "Ganjil 2025"
-            $table->string('tp')->nullable(); // misalnya: "Ganjil 2025"
-            $table->text('catatan')->nullable();    // opsional: untuk komentar atau evaluasi
-
+            $table->string('semester')->nullable(); 
+            $table->string('tp')->nullable(); 
+            $table->text('catatan')->nullable();
+            $table->unsignedBigInteger('wali_kelas');
+            $table->foreign('wali_kelas')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

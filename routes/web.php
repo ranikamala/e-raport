@@ -21,9 +21,15 @@ Route::post('/update_profile',[ProfileController::class,'update'])->name('update
 
 
 Route::get('/penilaian',[PenilaianController::class,'index'])->name("penilaian")->middleware('auth');
+Route::get('/penilaian_ikhlas',[PenilaianController::class,'penilaianIkhlas'])->name("penilaian_ikhlas")->middleware('auth');
+Route::get('/penilaian_alim',[PenilaianController::class,'penilaianAlim'])->name("penilaian_alim")->middleware('auth');
+Route::get('/penilaian_malik',[PenilaianController::class,'penilaianMalik'])->name("penilaian_malik")->middleware('auth');
 Route::get('/santri',[SantriController::class,'index'])->name("santri")->middleware('auth');
 Route::get('/edit_santri-{id}',[SantriController::class,'edit'])->name("edit_santri")->middleware('auth');
 Route::get('/list_santri',[SantriController::class,'listSantri'])->name("list_santri")->middleware('auth');
+Route::get('/list_santri_ikhlas',[SantriController::class,'listSantriIkhlas'])->name("list_santri_ikhlas")->middleware('auth');
+Route::get('/list_santri_alim',[SantriController::class,'listSantriAlim'])->name("list_santri_alim")->middleware('auth');
+Route::get('/list_santri_malik',[SantriController::class,'listSantriMalik'])->name("list_santri_malik")->middleware('auth');
 Route::get('/detail_santri-{id}',[SantriController::class,'show'])->name("detail_santri")->middleware('auth');
 Route::get('/detail_saya',[SantriController::class,'detailSaya'])->name("detail_saya")->middleware('auth');
 Route::get('/edit_data',[SantriController::class,'edit_data'])->name("edit_data")->middleware('auth');

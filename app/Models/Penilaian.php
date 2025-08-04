@@ -33,5 +33,6 @@ class Penilaian extends Model
         'semester',
         'tp',
         'catatan',
+        'wali_kelas',
     ];
 }

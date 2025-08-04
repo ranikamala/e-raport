@@ -10,9 +10,8 @@
             @if($nilai)
             <form action="{{ route('penilaian.update') }}" method="POST">
               @csrf
-              
-
               <input type="hidden" name="user_id" value="{{ $santri->id }}">
+              <input type="hidden" name="wali_kelas" value="{{ auth()->user()->id }}">
         
               {{-- A. MATERI POKOK --}}
               <h6 class="mt-3">A. Materi Pokok</h6>
@@ -153,7 +152,7 @@
               <div class="mt-4">
                 <button type="submit" class="btn btn-success">Update</button>
                 <div class="float-end">
-                    <a href="/penilaian" class="btn btn-secondary">Batal</a>
+                    <button onclick="history.back()" class="btn btn-secondary">Batal</button>
                 </div>
               </div>
             </form>
@@ -162,6 +161,7 @@
               @csrf
 
               <input type="hidden" name="user_id" value="{{ $santri->id }}">
+              <input type="hidden" name="wali_kelas" value="{{ auth()->user()->id }}">
         
               {{-- A. MATERI POKOK --}}
               <h6 class="mt-3">A. Materi Pokok</h6>
@@ -281,7 +281,7 @@
               <div class="mt-4">
                 <button type="submit" class="btn btn-success">Simpan</button>
                 <div class="float-end">
-                    <a href="/penilaian" class="btn btn-secondary">Batal</a>
+                <button onclick="history.back()" class="btn btn-secondary">Batal</button>
                 </div>
               </div>
             </form>

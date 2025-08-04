@@ -6,6 +6,7 @@ use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class SantriController extends Controller
@@ -70,6 +71,7 @@ class SantriController extends Controller
             'jenis_kelamin'    => 'required|in:Laki-laki,Perempuan',
             'agama'            => 'required|string|max:50',
             'anak_ke'          => 'required|integer|min:1',
+            'kelas'            => 'required|in:ikhlas,malik,alim',
             'alamat'           => 'required|string',
         ], [
             'nama_panggilan.required'  => 'Nama panggilan wajib diisi.',
@@ -81,6 +83,8 @@ class SantriController extends Controller
             'agama.required'           => 'Agama wajib diisi.',
             'anak_ke.required'         => 'Data anak ke-berapa wajib diisi.',
             'anak_ke.integer'          => 'Anak ke harus berupa angka.',
+            'kelas.required'           => 'Kelas wajib diisi.',
+            'kelas.in'                 => 'Kelas harus Al-Ikhlas, Al-Malik, atau Al-Alim.',
             'alamat.required'          => 'Alamat wajib diisi.',
         ]);
 
@@ -97,10 +101,11 @@ class SantriController extends Controller
             'agama'           => $request->agama,
             'anak_ke'         => $request->anak_ke,
             'alamat'          => $request->alamat,
+            'kelas'           => $request->kelas,
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect('/list_santri')->with('success', 'Data santri berhasil disimpan.');
+        return redirect('/list_santri_'.$request->kelas)->with('success', 'Data santri berhasil disimpan.');
     }
 
     public function update(Request $request)
@@ -114,6 +119,7 @@ class SantriController extends Controller
             'agama'            => 'required|string|max:50',
             'anak_ke'          => 'required|integer|min:1',
             'alamat'           => 'required|string',
+            'kelas'            => 'required|in:ikhlas,malik,alim',
         ], [
             'nama_panggilan.required'  => 'Nama panggilan wajib diisi.',
             'tempat_lahir.required'    => 'Tempat lahir wajib diisi.',
@@ -124,6 +130,8 @@ class SantriController extends Controller
             'agama.required'           => 'Agama wajib diisi.',
             'anak_ke.required'         => 'Data anak ke-berapa wajib diisi.',
             'anak_ke.integer'          => 'Anak ke harus berupa angka.',
+            'kelas.required'           => 'Kelas wajib diisi.',
+            'kelas.in'                 => 'Kelas harus Al-Ikhlas, Al-Malik, atau Al-Alim.',
             'alamat.required'          => 'Alamat wajib diisi.',
         ]);
 
@@ -142,12 +150,13 @@ class SantriController extends Controller
             'jenis_kelamin'   => $request->jenis_kelamin,
             'agama'           => $request->agama,
             'anak_ke'         => $request->anak_ke,
+            'kelas'           => $request->kelas,
             'alamat'          => $request->alamat,
         ]);
 
         if (auth()->user()->role == 'guru') {
 
-            return redirect('/list_santri')->with('success', 'Data santri berhasil diupdate.');
+            return redirect('/list_santri_'.$request->kelas)->with('success', 'Data santri berhasil diupdate.');
         }else{
             return redirect('/detail_saya')->with('success', 'Data santri berhasil diupdate.');
         }
@@ -175,7 +184,42 @@ class SantriController extends Controller
 
     public function listSantri()
     {
-        $santris = User::where('role', 'siswa')->get();
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->select('users.id as id', 'users.name','santri.kelas as kelas')
+        ->where('users.role', 'siswa')
+        ->where('santri.kelas', null)
+        ->get();
+        return view('list_santri', compact('santris'));
+    }
+    public function listSantriIkhlas()
+    {
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->select('users.id as id', 'users.name','santri.kelas as kelas')
+        ->where('users.role', 'siswa')
+        ->where('santri.kelas', 'ikhlas')
+        ->get();
+        return view('list_santri', compact('santris'));
+    }
+    public function listSantriAlim()
+    {
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->select('users.id as id', 'users.name','santri.kelas as kelas')
+        ->where('users.role', 'siswa')
+        ->where('santri.kelas', 'alim')
+        ->get();
+        return view('list_santri', compact('santris'));
+    }
+    public function listSantriMalik()
+    {
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->select('users.id as id', 'users.name','santri.kelas as kelas')
+        ->where('users.role', 'siswa')
+        ->where('santri.kelas', 'malik')
+        ->get();
         return view('list_santri', compact('santris'));
     }
     /**

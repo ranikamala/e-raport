@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->integer('anak_ke');
             $table->text('alamat');
+            $table->enum('kelas',['ikhlas', 'malik', 'alim']);
             $table->timestamps();
 
             // Foreign key

@@ -46,6 +46,15 @@
               <label>Anak Ke</label>
               <input type="number" name="anak_ke"  class="form-control" min="1" required>
             </div>
+            <div class="col-md-6 mb-3">
+              <label>Kelas</label>
+              <select name="kelas" class="form-control" required>
+                <option value="">-- Pilih --</option>
+                <option value="ikhlas" {{ $namaSantri->kelas == 'ikhlas' ? 'selected' : '' }}>Al-Ikhlas</option>
+                <option value="malik" {{ $namaSantri->kelas == 'malik' ? 'selected' : '' }}>Al-Malik</option>
+                <option value="alim" {{ $namaSantri->kelas == 'alim' ? 'selected' : '' }}>Al-Alim</option>
+              </select>
+            </div>
             <div class="col-md-12 mb-3">
               <label>Alamat</label>
               <textarea name="alamat"  class="form-control" rows="3" required></textarea>
@@ -99,6 +108,15 @@
             <div class="col-md-6 mb-3">
               <label>Anak Ke</label>
               <input type="number" name="anak_ke" value="{{ $dataSantri->anak_ke }}" class="form-control" min="1" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Kelas</label>
+              <select name="kelas" class="form-control" required>
+                <option value="">-- Pilih --</option>
+                <option value="ikhlas" {{ $dataSantri->kelas == 'ikhlas' ? 'selected' : '' }}>Al-Ikhlas</option>
+                <option value="malik" {{ $dataSantri->kelas == 'malik' ? 'selected' : '' }}>Al-Malik</option>
+                <option value="alim" {{ $dataSantri->kelas == 'alim' ? 'selected' : '' }}>Al-Alim</option>
+              </select>
             </div>
             <div class="col-md-12 mb-3">
               <label>Alamat</label>

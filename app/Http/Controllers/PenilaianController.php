@@ -7,6 +7,7 @@ use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PenilaianController extends Controller
 {
@@ -16,6 +17,33 @@ class PenilaianController extends Controller
     public function index()
     {
         $santris = User::where('role', 'siswa')->get();
+        return view("nilai.nilai_santri", compact('santris'));
+    }
+
+    public function penilaianIkhlas()
+    {
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->where('santri.kelas', 'ikhlas')
+        ->get();
+        return view("nilai.nilai_santri", compact('santris'));
+    }
+
+    public function penilaianAlim()
+    {
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->where('santri.kelas', 'alim')
+        ->get();
+        return view("nilai.nilai_santri", compact('santris'));
+    }
+
+    public function penilaianMalik()
+    {
+        $santris = DB::table('users')
+        ->leftJoin('santri', 'users.id', '=', 'santri.user_id')
+        ->where('santri.kelas', 'malik')
+        ->get();
         return view("nilai.nilai_santri", compact('santris'));
     }
 
@@ -36,6 +64,9 @@ class PenilaianController extends Controller
      */
 
      
+     public function stores(Request $request){
+        dd($request->all());
+     }
     public function store(Request $request)
     {
     // Validasi input
@@ -47,6 +78,7 @@ class PenilaianController extends Controller
             'absensi.*'          => 'required|numeric|min:0|max:100',
             'semester'           => 'nullable|string|max:50',
             'catatan'            => 'nullable|string',
+            'wali_kelas'         => 'string',
         ]);
 
         // Simpan ke database
@@ -83,6 +115,7 @@ class PenilaianController extends Controller
             'semester'           => $request->semester,
             'tp'                 => $request->tp,
             'catatan'            => $request->catatan,
+            'wali_kelas'         => $request->wali_kelas,
         ]);
 
         return redirect('/penilaian')->with('success', 'Nilai rapor berhasil disimpan.');
@@ -91,13 +124,31 @@ class PenilaianController extends Controller
     /**
      * Display the specified resource.
      */
+    public function shows($id){
+        $santri = User::find($id);
+        if ($santri) {
+            $dataSantri = Santri::where('user_id', $id)
+            ->first();
+        }
+        $nilai = DB::table('penilaian')
+        ->leftJoin('users','penilaian.wali_kelas','=','users.id')
+        ->select('*')
+        ->where('penilaian.user_id', $id)
+        ->first();
+        dd($nilai);
+    }
     public function show($id)
     {
         $santri = User::find($id);
         if ($santri) {
-            $dataSantri = Santri::where('user_id', $id)->first();
+            $dataSantri = Santri::where('user_id', $id)
+            ->first();
         }
-        $nilai = Penilaian::where('user_id', $id)->first();
+        $nilai = DB::table('penilaian')
+        ->leftJoin('users','penilaian.wali_kelas','=','users.id')
+        ->select('*')
+        ->where('penilaian.user_id', $id)
+        ->first();
         return view("nilai.detail_nilai", compact('santri', 'nilai', 'dataSantri'));
     }
 
@@ -107,7 +158,11 @@ class PenilaianController extends Controller
     public function edit($id)
     {
         $santri = User::find($id);
-        $nilai = Penilaian::where('user_id', $id)->first();
+        $nilai = DB::table('penilaian')
+        ->leftJoin('users','penilaian.wali_kelas','=','users.id')
+        ->select('*')
+        ->where('penilaian.user_id', $id)
+        ->first();
         return view("nilai.edit_nilai", compact('santri', 'nilai'));
     }
 

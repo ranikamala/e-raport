@@ -46,6 +46,9 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ 'template' }}/dist/css/adminlte.css" />
     <!--end::Required Plugin(AdminLTE)-->
+    <!--begin::SweetAlert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--end::SweetAlert2-->
   </head>
   <!--end::Head-->
   <!--begin::Body-->
@@ -65,18 +68,26 @@
             @csrf
             <div class="input-group mb-1">
               <div class="form-floating">
-                <input id="loginEmail" type="email" name="email" class="form-control" value="" placeholder="" />
+                <input id="loginEmail" type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="" required/>
                 <label for="loginEmail">Email</label>
               </div>
               <div class="input-group-text"><span class="bi bi-envelope"></span></div>
             </div>
+            @error('email')
+              <div class="text-danger small mb-2">{{ $message }}</div>
+            @enderror
+            
             <div class="input-group mb-1">
               <div class="form-floating">
-                <input id="loginPassword" name="password" type="password" class="form-control" placeholder="" />
+                <input id="loginPassword" name="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="" required/>
                 <label for="loginPassword">Password</label>
               </div>
               <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
             </div>
+            @error('password')
+              <div class="text-danger small mb-2">{{ $message }}</div>
+            @enderror
+            
             <!--begin::Row-->
             <div class="row">
               <div class="col-8 d-inline-flex align-items-center">
@@ -142,6 +153,24 @@
       });
     </script>
     <!--end::OverlayScrollbars Configure-->
+    
+    <!--begin::SweetAlert for Login Errors-->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Check if there are validation errors
+        @if($errors->any())
+          Swal.fire({
+            icon: 'error',
+            title: 'Login Gagal!',
+            text: 'Email atau password yang Anda masukkan salah. Silakan coba lagi.',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6'
+          });
+        @endif
+      });
+    </script>
+    <!--end::SweetAlert for Login Errors-->
+    
     <!--end::Script-->
   </body>
   <!--end::Body-->

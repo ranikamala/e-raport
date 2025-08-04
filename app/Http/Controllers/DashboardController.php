@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +21,15 @@ class DashboardController extends Controller
 
         $jumlahSantri = User::where('role', 'siswa')->count();
         $jumlahGuru = User::where('role', 'guru')->count();
-
+        $jumlahSantriIkhlas = Santri::where('kelas', 'ikhlas')->count();
+        $jumlahSantriMalik = Santri::where('kelas', 'malik')->count();
+        $jumlahSantriAlim = Santri::where('kelas', 'alim')->count();
         return view('dashboard', [
             'jumlahSantri' => $jumlahSantri,
             'jumlahGuru' => $jumlahGuru,
+            'jumlahSantriIkhlas' => $jumlahSantriIkhlas,
+            'jumlahSantriMalik' => $jumlahSantriMalik,
+            'jumlahSantriAlim' => $jumlahSantriAlim,
         ]);
     }
 

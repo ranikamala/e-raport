@@ -2,14 +2,52 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">    
 
     <div class="container">
+        <div class="row justify-content-center mt-4 mb-4">
+            <div class="col-md-6 col-sm-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <label for="kelasSelect" class="form-label fw-bold mb-2">Pilih Kelas</label>
+                        <select id="kelasSelect" class="form-select" onchange="window.location.href = '{{ url('list_santri') }}' + this.value">
+                            @php
+                                // Tentukan kelas yang aktif berdasarkan URL
+                                $currentUrl = url()->current();
+                                $kelasSelected = null;
+                                if (str_ends_with($currentUrl, 'list_santri_ikhlas')) {
+                                    $kelasSelected = 'ikhlas';
+                                } elseif (str_ends_with($currentUrl, 'list_santri_alim')) {
+                                    $kelasSelected = 'alim';
+                                } elseif (str_ends_with($currentUrl, 'list_santri_malik')) {
+                                    $kelasSelected = 'malik';
+                                } elseif (str_ends_with($currentUrl, 'list_santri')) {
+                                    $kelasSelected = 'none';
+                                }
+                            @endphp
+                            <option value="" {{ $kelasSelected == 'none' ? 'selected' : '' }}>Tidak Ada Kelas</option>
+                            <option value="_ikhlas" {{ $kelasSelected == 'ikhlas' ? 'selected' : '' }}>Al-Ikhlas</option>
+                            <option value="_alim" {{ $kelasSelected == 'alim' ? 'selected' : '' }}>Al-Alim</option>
+                            <option value="_malik" {{ $kelasSelected == 'malik' ? 'selected' : '' }}>Al-Malik</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
         <h4 class="mb-4 mt-4">Data Santri</h4>
 
         {{-- Pesan Sukses --}}
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            <script>
+                setTimeout(function() {
+                    var alert = document.getElementById('successAlert');
+                    if (alert) {
+                        var bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                        bsAlert.close();
+                    }
+                }, 2000);
+            </script>
         @endif
 
         <div class="card">
@@ -20,6 +58,7 @@
                             <tr>
                                 <th>Nomor</th>
                                 <th>Nama Lengkap</th>
+                                <th>Kelas</th>
                                 <th>Tindakan</th>
                             </tr>
                         </thead>
@@ -28,6 +67,17 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $santri->name }}</td>
+                                    <td>
+                                        @if($santri->kelas == 'ikhlas') 
+                                            <span class="badge bg-primary">Al-Ikhlas</span>
+                                        @elseif($santri->kelas == 'malik')
+                                            <span class="badge bg-success">Al-Malik</span>
+                                        @elseif($santri->kelas == 'alim')
+                                            <span class="badge bg-warning text-dark">Al-Alim</span>
+                                        @else
+                                            <span class="badge bg-secondary">(Belum diisi)</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('detail_santri', $santri->id) }}" class="btn btn-sm btn-info">Detail</a>
                                         <a href="{{ route('edit_santri', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
