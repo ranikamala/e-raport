@@ -108,6 +108,37 @@
               <p>Nilai Saya</p>
             </x-sidelink>
           </li>
+        @else
+          <ul
+              class="nav sidebar-menu flex-column"
+              data-lte-toggle="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+            <li class="nav-item {{ request()->is('santri') || request()->is('guru') ? 'menu-open' : 'menu' }}">
+              <a href="#" class="nav-link">
+                <i class="nav-icon bi bi-person-badge"></i>
+                <p>
+                  Akun
+                  <i class="nav-arrow bi bi-chevron-right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <x-sidelink href="{{ route('guru') }}" :active="request()->is('guru')">
+                    <i class="nav-icon bi bi-person"></i>
+                    <p>Guru</p>
+                  </x-sidelink>
+                </li>
+                <li class="nav-item">
+                  <x-sidelink href="{{ route('santri') }}" :active="request()->is('santri')">
+                    <i class="nav-icon bi bi-person"></i>
+                    <p>Santri</p>
+                  </x-sidelink>
+                </li>
+              </ul>
+            </li>
+          </ul>
         @endif
 
         <!-- Logout -->

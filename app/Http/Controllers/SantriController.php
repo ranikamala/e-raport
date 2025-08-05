@@ -47,7 +47,7 @@ class SantriController extends Controller
 
         // Simpan data santri ke database
         $user = new User(); // atau model Santri jika ada
-        $user->name = $request->name;
+        $user->name = ucwords(strtolower($request->name));
         $user->email = $request->email;
         $user->role = 'siswa';
         $user->password = Hash::make($request->password); // pastikan password di-hash
@@ -243,6 +243,11 @@ class SantriController extends Controller
         $dataSantri = User::find($id);
 
         $data = $request->only(['name', 'email']);
+
+        // Membuat name kapital di awal kata
+        if (isset($data['name'])) {
+            $data['name'] = ucwords(strtolower($data['name']));
+        }
 
         // Jika password diisi, update password, jika tidak, jangan ubah password
         if ($request->filled('password')) {

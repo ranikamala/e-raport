@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrangTuaController;
 use App\Http\Controllers\PenilaianController;
@@ -18,6 +19,12 @@ Route::get('/logout',[LoginController::class,'logout']);
 Route::get('/profile',[ProfileController::class,'index'])->name('profile')->middleware('auth');
 Route::get('/edit_profile',[ProfileController::class,'edit'])->name('edit_profile')->middleware('auth');
 Route::post('/update_profile',[ProfileController::class,'update'])->name('update_profile')->middleware('auth');
+
+Route::get('/guru',[GuruController::class,'index'])->name("guru")->middleware('auth');
+Route::get('/inp_guru',[GuruController::class,'create'])->name("inp_guru")->middleware('auth');
+Route::post('/store_guru',[GuruController::class,'store'])->name("guru.store")->middleware('auth');
+Route::get('/edit_guru-{id}',[GuruController::class,'edit'])->name("edit_akun_guru")->middleware('auth');
+Route::post('/update_guru',[GuruController::class,'update'])->name("update_akun_guru")->middleware('auth');
 
 
 Route::get('/penilaian',[PenilaianController::class,'index'])->name("penilaian")->middleware('auth');

@@ -216,7 +216,7 @@
               Hai <span class="fw-semibold">{{ auth()->user()->name }}</span>,<br>
               Selamat datang di sistem E-Raport. <br>
               Silakan gunakan menu di samping untuk mengakses fitur-fitur yang tersedia.<br>
-              Semoga harimu menyenangkan dan penuh semangat belajar!
+              Semoga harimu menyenangkan dan penuh semangat!
             </p>
             <div class="d-flex justify-content-center gap-3">
               <a href="/profile" class="btn btn-success shadow-sm px-4">

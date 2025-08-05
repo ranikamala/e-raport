@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
 
         // Data guru
         $teachers = [
-            ['name' => 'Guru Satu', 'email' => 'guru1@example.com'],
+            ['name' => 'Guru', 'email' => 'guru@example.com'],
+            ['name' => 'Admin', 'email' => 'admin@example.com'],
             
         ];
 
@@ -36,8 +37,6 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Siswa Satu', 'email' => 'siswa1@example.com'],
             ['name' => 'Siswa Dua', 'email' => 'siswa2@example.com'],
             ['name' => 'Siswa Tiga', 'email' => 'siswa3@example.com'],
-            ['name' => 'Siswa Empat', 'email' => 'siswa4@example.com'],
-            ['name' => 'Siswa Lima', 'email' => 'siswa5@example.com'],
         ];
 
         foreach ($students as $student) {

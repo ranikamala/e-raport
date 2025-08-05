@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container">
-        <h4 class="mb-4 mt-4">Akun Santri</h4>
+        <h4 class="mb-4 mt-4">Akun Guru</h4>
 
         {{-- Pesan Sukses --}}
         @if (session('success'))
@@ -19,11 +19,11 @@
             </script>
         @endif
 
-        {{-- Tabel Data Santri --}}
+        {{-- Tabel Data Guru --}}
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center {{ auth()->user()->role !== 'admin' ? 'd-none' : ''}}}}">
-                <a href="{{ route('inp_santri') }}" class="btn btn-success btn-sm">
-                    <i class="bi bi-plus-circle"></i> Tambah Santri
+                <a href="{{ route('inp_guru') }}" class="btn btn-success btn-sm">
+                    <i class="bi bi-plus-circle"></i> Tambah Guru
                 </a>
             </div>
             <div class="card-body table-responsive">
@@ -38,20 +38,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($santris as $index => $santri)
+                        @forelse ($teacher as $index => $guru)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>{{ $santri->name }}</td>
-                                <td>{{ $santri->email }}</td>
-                                <td>{{ $santri->created_at->format('d M Y') }}</td>
+                                <td>{{ $guru->name }}</td>
+                                <td>{{ $guru->email }}</td>
+                                <td>{{ $guru->created_at->format('d M Y') }}</td>
                                 <td>
-                                    <a href="{{ route('edit_akun_santri', $santri->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <button class="btn btn-sm btn-danger" data-id="{{ $santri->id }}" onclick="hapus(this)">Hapus</button>
+                                    <a href="{{ route('edit_akun_guru', $guru->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <button class="btn btn-sm btn-danger" data-id="{{ $guru->id }}" onclick="hapus(this)">Hapus</button>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">Belum ada data santri.</td>
+                                <td colspan="5" class="text-center">Belum ada data guru.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -64,7 +64,7 @@
         function hapus(button) {
             const id = button.getAttribute('data-id');
             Swal.fire({
-                title: 'Yakin ingin menghapus santri ini?',
+                title: 'Yakin ingin menghapus guru ini?',
                 text: "Data yang dihapus tidak dapat dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -74,7 +74,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '/delete_santri-' + id;
+                    window.location.href = '/delete_guru-' + id;
                 }
             });
         }

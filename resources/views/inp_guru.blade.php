@@ -3,14 +3,14 @@
     
     <div class="card shadow mb-4 mt-4">
       <div class="card-header bg-primary text-white">
-        <h5 class="mb-0">Tambah Akun Santri</h5>
+        <h5 class="mb-0">Tambah Akun Guru</h5>
       </div>
 
       <div class="card-body">
-        <form action="{{ route('santri.store') }}" method="POST">
+        <form action="{{ route('guru.store') }}" method="POST">
           @csrf
 
-          {{-- Data Santri --}}
+          {{-- Data Guru --}}
           <div class="row">
               <div class="col-md-6 mb-3">
                   <label>Nama Lengkap</label>
